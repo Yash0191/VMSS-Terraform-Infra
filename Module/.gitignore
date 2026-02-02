@@ -1,0 +1,5 @@
+# Terraform ignore
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
