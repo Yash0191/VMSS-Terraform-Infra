@@ -74,15 +74,14 @@ variable "lb" {
 
 variable "vmss" {
   type = map(object({
-    vmss_name             = string
-    location              = string
-    rgname                = string
-    size                  = string
-    admin_username        = string
-    admin_password        = string
-    network_interface_ids = list(string)
+    vmss_name      = string
+    location       = string
+    rgname         = string
+    size           = string
+    admin_username = string
+    admin_password = string
+    subnet_id      = string
   }))
-
 }
 
 variable "bastion" {
@@ -104,12 +103,23 @@ variable "lws" {
   }))
 }
 
-variable "AGW" {
+variable "kv" {
   type = map(object({
-    agwname = string
-    location = string
-    rgname   = string
-    subnet_id = string
+    sku_name  = string
+    location  = string
+    rgname    = string
+    kvname    = string
+    tenant_id = string
+
+  }))
+}
+
+variable "agw" {
+  type = map(object({
+    agwname              = string
+    location             = string
+    rgname               = string
+    subnet_id            = string
     public_ip_address_id = string
   }))
 }

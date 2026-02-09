@@ -1,22 +1,22 @@
-resource "azurerm_linux_virtual_machine" "vmss" {
-  name                  = var.vmss_name
-  resource_group_name   = var.rgname
-  location              = var.location
-  size                  = var.size
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
-  network_interface_ids = var.network_interface_ids
+resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
+  name                = var.vmss_name
+  location            = var.location
+  resource_group_name = var.rgname
+  sku                 = var.size
+  instances           = 1
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
+  disable_password_authentication = false
 
-  disable_password_authentication ="false"
+  network_interface {
+    name    = "vmss-nic"
+    primary = true
 
-  #   admin_ssh_key {
-  #     username   = "adminuser"
-  #     public_key = file("~/.ssh/id_rsa.pub")
-  #   }
-
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    ip_configuration {
+      name      = "internal"
+      primary  = true
+      subnet_id = var.subnet_id
+    }
   }
 
   source_image_reference {
@@ -25,4 +25,9 @@ resource "azurerm_linux_virtual_machine" "vmss" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+    os_disk {
+    storage_account_type = "Standard_LRS"
+    caching              = "ReadWrite"
+  }
+
 }

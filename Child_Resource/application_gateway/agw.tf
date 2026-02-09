@@ -1,4 +1,4 @@
-resource "azurerm_application_gateway" "AGW" {
+resource "azurerm_application_gateway" "agw" {
   name                = var.agwname
   resource_group_name = var.rgname
   location            = var.location
